@@ -183,3 +183,8 @@ URL: http://195.38.164.168:7610/api/tutorials
 указал URL "http://195.38.164.168:7610/api/tutorials";
 запрос успешно обработался, о чем свидетельствует код 200 (OK), с заголовком Allow: GET, POST, PUT, DELETE, HEAD,
 OPTIONS.
+
+    ЗАКЛЮЧЕНИЕ
+
+API /api/tutorials протестировано: все методы (GET, POST, PUT, DELETE, HEAD, OPTIONS) 
+работают корректно, возвращают ожидаемые данные и коды статуса. API готово к использованию.
