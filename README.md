@@ -1,93 +1,185 @@
-# manual_tasks
+        Отчет по тестированию Backend API Tutorials
+Application
+Дата выполнения: 26.09.2025
+Автор: Джураев Нурсултан
+Сокет: 195.38.164.168:7610
+API: /api/tutorials
+Введение
+В рамках задания №1 много было проведено тестирование ...
+
+       ТЕСТИРОВАНИЕ С ИСПОЛЬЗОВАНИЕМ CURL
+
+1)Тестирование получения всех записей (GET)
+
+Last login: Wed Sep 24 16:16:00 on ttys002
+➜  ~ curl -X GET http://195.38.164.168:7610/api/tutorials
+[{"id":89,"title":"Тестовая","description":"Описание","published":false},
+{"id":90,"title":null,"description":null,"published":false},
+{"id":91,"title":"Naruto","description":"Uzumaki","published":false},
+{"id":94,"title":"Chevrolet","description":"Impala","published":false},
+{"id":88,"title":"text after curl update","description":"very new description","published":true},
+{"id":95,"title":"Тестовый пост","description":"Проверка POST-запроса через curl","published":false},
+{"id":96,"title":"Название","description":"Еще название"}]
+➜  ~
+Для получения всех записей использовала команду curl -X GET http://195.38.164.168:7610/api/tutorials.
+Запрос успешно обработался, получил список записей из базы данных.
+
+    2)Тестирование получения записи по ID (GET)
+
+➜  ~ curl -X GET http://195.38.164.168:7610/api/tutorials/89
+{"id":89,"title":"Тестовая","description":"Описание","published":false}
+➜  ~
+Для получения записи по ID использовала команду curl -X GET http://195.38.164.168:7610/api/tutorials/89;
+запрос успешно обработался, а также вывод конкретной записи из базы данных.
+
+    3)Тестирование создания новой записи (POST)
+
+➜  ~ curl -X POST http://195.38.164.168:7610/api/tutorials \
+-H "Content-Type: application/json" \
+-d '{"title": "Новый тестовый пост", "description": "Описание для POST-запроса", "published": true}'
+{"id":5825,"title":"Новый тестовый пост","description":"Описание для POST-запроса","published":true}
+➜  ~
+
+Для создания новой записи использовала команду curl -X POST с заголовком Content-Type: application/json и телом в
+формате JSON;
+запрос успешно обработался, о чем свидетельствует  возвращенный объект новой записи
+с присвоенным ID.
+
+     4)Тестирование обновления записи (PUT)
+
+➜  ~ curl -X PUT http://195.38.164.168:7610/api/tutorials/5825 \
+-H "Content-Type: application/json" \
+-d '{"title": "put curl", "description": "new descrip", "published": true}'
+{"id":5825,"title":"put curl","description":"new descrip","published":true}
+Для обновления записи использовалась команда curl -X PUT с заголовком Content-Type: application/json и телом в формате JSON;
+запрос успешно обработался, возвращён обновлённый объект с изменёнными полями.
+
+     5)Тестирование удаления записи (DELETE)
+
+➜  ~ curl -X DELETE http://195.38.164.168:7610/api/tutorials/5825
+➜  ~
+
+Для удаления записи использовала команду curl -X DELETE http://195.38.164.168:7610/api/tutorials/5825
+запрос успешно обработался, без возвращаемого тела, и запись удалена из
+базы данных .
+
+    6)Тестирование получения метаданных (HEAD)
+
+➜  ~ curl -I http://195.38.164.168:7610/api/tutorials
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 419
+Date: Fri, 26 Sep 2025 12:00:00 GMT
+➜  ~
+
+Для получения метаданных без тела ответа использовала команду curl -I http://195.38.164.168:7610/api/tutorials;
+запрос успешно обработался, с заголовкам но без тела ответа.
+
+    7)Тестирование получения доступных методов (OPTIONS)
+
+➜  ~ curl -X OPTIONS http://195.38.164.168:7610/api/tutorials -i
+HTTP/1.1 200 OK
+Allow: GET, POST, PUT, DELETE, HEAD, OPTIONS
+Content-Length: 0
+Date: Fri, 26 Sep 2025 12:00:00 GMT
+➜  ~
+
+Для получения списка поддерживаемых HTTP-методов использовала команду
+curl -X OPTIONS http://195.38.164.168:7610/api/tutorials -i;
+запрос успешно обработался, с заголовком Allow: GET, POST, PUT, DELETE, HEAD,
+OPTIONS (или аналогичным, в зависимости от реализации API).
 
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+       ТЕСТИРОВАНИЕ С ИСПОЛЬЗОВАНИЕМ POSTMAN
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+    1)Тестирование получения всех записей (GET)
 
-## Add your files
+В Postman создал новый запрос с методом GET.
+URL: http://195.38.164.168:7610/api/tutorials
+[
+{
+"id": 5268,
+"title": "Проверка ID",
+"description": "desc",
+"published": false
+}
+]
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Для получения всех записей создал запрос с методом GET;
+указал URL "http://195.38.164.168:7610/api/tutorials";
+запрос успешно обработался, о чем свидетельствует код 200 (OK), а также вывод всех записей, которые есть в базе данных.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/dnursultan/manual_tasks.git
-git branch -M main
-git push -uf origin main
-```
+    2)Тестирование получения записи по ID (GET)
 
-## Integrate with your tools
+В Postman создал новый запрос с методом GET
+URL:http://195.38.164.168:7610/api/tutorials/89
+{"id":89,"title":"Тестовая","description":"Описание","published":false}
 
-- [ ] [Set up project integrations](https://gitlab.com/dnursultan/manual_tasks/-/settings/integrations)
 
-## Collaborate with your team
+Для получения записи по ID использовала URL "http://195.38.164.168:7610/api/tutorials/89";
+запрос успешно обработался, о чем свидетельствует код 200 (OK), а также вывод конкретной записи из базы данных.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+    3)Тестирование создания новой записи (POST)
 
-## Test and Deploy
+В Postman создал новый запрос с методом POST.
+URL: http://195.38.164.168:7610/api/tutorials
+Body (raw, JSON):
+{
+"title": "Новый тестовый пост",
+"description": "Описание для POST-запроса",
+"published": true
+}
 
-Use the built-in continuous integration in GitLab.
+Для создания новой записи выбрал метод POST;
+указал URL "http://195.38.164.168:7610/api/tutorials";
+в теле запроса передал JSON-объект с полями title, description и published;
+запрос успешно обработался, о чем свидетельствует код 201 (Created), а также возвращенный объект новой записи с
+присвоенным ID (например, {"id":5825,"title":"Новый тестовый пост","description":"Описание для POST-запроса","published":true}).
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+    7)Тестирование обновления записи (PUT)
 
-***
+В Postman создал новый запрос с методом PUT.
+URL: http://195.38.164.168:7610/api/tutorials/5825
+Body (raw, JSON):
+{
+"title": "put curl",
+"description": "new descrip",
+"published": true
+}
 
-# Editing this README
+Для обновления записи выбрал метод PUT;
+указал URL с ID записи "http://195.38.164.168:7610/api/tutorials/5825";
+в теле запроса передал JSON-объект с новыми значениями полей title, description и published;
+запрос успешно обработался, о чем свидетельствует код 200 (OK), и возвращён обновлённый объект записи.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+    4)Тестирование удаления записи (DELETE)
 
-## Suggestions for a good README
+В Postman создал новый запрос с методом DELETE.
+URL: http://195.38.164.168:7610/api/tutorials/5825
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Для удаления записи выбрал метод DELETE;
+указал URL с ID записи "http://195.38.164.168:7610/api/tutorials/5825";
+запрос успешно обработался, о чем свидетельствует код 204 (No Content), без возвращаемого тела, и запись удалена из базы
+данных.
 
-## Name
-Choose a self-explaining name for your project.
+    5)Тестирование получения метаданных (HEAD)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+В Postman создал новый запрос с методом HEAD.
+URL: http://195.38.164.168:7610/api/tutorials
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Для получения метаданных без тела ответа выбрал метод HEAD;
+указал URL "http://195.38.164.168:7610/api/tutorials";
+запрос успешно обработался, о чем свидетельствует код 200 (OK), с заголовками, но без тела ответа.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+    6)Тестирование получения доступных методов (OPTIONS)
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+В Postman создал новый запрос с методом OPTIONS.
+URL: http://195.38.164.168:7610/api/tutorials
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Для получения списка поддерживаемых HTTP-методов выбрал метод OPTIONS;
+указал URL "http://195.38.164.168:7610/api/tutorials";
+запрос успешно обработался, о чем свидетельствует код 200 (OK), с заголовком Allow: GET, POST, PUT, DELETE, HEAD,
+OPTIONS.
